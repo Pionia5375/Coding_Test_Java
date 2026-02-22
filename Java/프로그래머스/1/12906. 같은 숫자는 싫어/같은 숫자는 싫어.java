@@ -2,68 +2,20 @@ import java.util.*;
 
 public class Solution {
     public int[] solution(int []arr) {
-        int[] answer = {};
+        ArrayList<Integer> tempList = new ArrayList<Integer>();
         
-        int length = arr.length;
-        IntStack stack = new IntStack(length);
-    
-        int i = 0;
-        stack.push(arr[i]);
-    
-        for (i = 1; i < length; i++) {
-            if (arr[i] == stack.peek())
-                continue;
-            else
-                stack.push(arr[i]);
+        int preNum = 10;
+        for (int num : arr) {
+            if (preNum != num)
+                tempList.add(num);
+            preNum = num;
         }
-    
-        answer = stack.returnStack();
         
-        // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
-        System.out.println("Hello Java");
-
+        int[] answer = new int[tempList.size()];
+        for (int i = 0; i < answer.length; i++) {
+            answer[i] = tempList.get(i).intValue();            
+        }
+        
         return answer;
-    }
-}    
-
-class IntStack {
-    private int capacity;
-    private int pointer;
-    private int[] stack;
-   
-    public class EmptyIntStackException extends RuntimeException {
-        public EmptyIntStackException() {
-        }
-    }
-        
-    public class OverflowIntStackException extends RuntimeException {
-        public OverflowIntStackException() {
-        }
-    }
-
-    public IntStack(int maxlen) {
-        pointer = 0;
-        capacity = maxlen;
-        try {
-            stack = new int[capacity];
-        } catch (OutOfMemoryError e) {
-            capacity = 0;
-        }
-    }
-
-    public int push (int x) {
-        if (pointer >= capacity)
-            throw new OverflowIntStackException();
-        return stack[pointer++] = x;
-    }
-        
-    public int peek () {
-        if (pointer <= 0)
-            throw new EmptyIntStackException();
-        return stack[pointer - 1];
-    }
-
-    public int[] returnStack () {
-        return Arrays.copyOf(stack, pointer);
     }
 }
